@@ -1,1 +1,2 @@
-export * from "./trading-simulator";
+export * from "./sidenav";
+export * from "./sidenav-component";

@@ -1,3 +1,4 @@
+import { SideNav } from "@/components";
 import "./globals.css";
 
 import type { Metadata } from "next";
@@ -27,7 +28,12 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
         />
       </head>
-      <body className={`${openSans.variable} antialiased`}>{children}</body>
+      <body className={`${openSans.variable} antialiased`}>
+        <div className="flex">
+          <SideNav />
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
