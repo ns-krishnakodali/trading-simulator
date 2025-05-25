@@ -1,4 +1,3 @@
-import { SideNav } from "@/components";
 import "./globals.css";
 
 import type { Metadata } from "next";
@@ -29,10 +28,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${openSans.variable} antialiased`}>
-        <div className="flex">
-          <SideNav />
-          {children}
-        </div>
+        <div className="flex">{children}</div>
       </body>
     </html>
   );

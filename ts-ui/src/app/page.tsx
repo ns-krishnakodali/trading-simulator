@@ -1,11 +1,21 @@
-import { JSX } from "react";
+"use client";
 
-const HomePage = (): JSX.Element => {
-  return (
-    <div className="flex justify-center pt-6 w-full">
-      <h1 className="text-4xl font-bold text-gray-800">Dashboard</h1>
-    </div>
-  );
+import { useRouter } from "next/navigation";
+
+import { useEffect } from "react";
+
+import { isValidToken } from "@/utils";
+
+const HomePage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isValidToken()) {
+      router.push("/dashboard");
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
 };
 
 export default HomePage;
