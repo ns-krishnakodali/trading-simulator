@@ -27,11 +27,11 @@ export const NotificationProvider = ({
 }) => {
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState("");
-  const [type, setType] = useState<"success" | "error" | "warning">("success");
+  const [type, setType] = useState<NotificationType>("info");
 
   const notify = (
     message: string,
-    notificationType: NotificationType = "success",
+    notificationType: NotificationType = "info",
   ) => {
     setMessage(message);
     setType(notificationType);

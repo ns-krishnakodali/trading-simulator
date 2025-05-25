@@ -35,8 +35,7 @@ const ProtectedLayout = ({
 
   return (
     <div className="flex">
-      {/* Placeholders */}
-      <SideNav userName="User Name" email="user@email.com" />
+      <SideNav username="User Name" email="user@email.com" />
       {children}
     </div>
   );

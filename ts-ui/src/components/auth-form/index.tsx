@@ -19,9 +19,9 @@ export const AuthForm = ({ children, onSubmitForm }: IAuthForm) => {
   };
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-br from-slate-900 to-slate-800 px-8">
+    <div className="flex items-center justify-center w-screen min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8 md:py-0">
       <form
-        className="bg-slate-800 w-full max-w-md shadow-2xl rounded-xl text-white p-8 md:px-12 md:pb-12"
+        className="bg-slate-800 w-full max-w-md shadow-2xl rounded-xl text-white p-8 md:px-12"
         onSubmit={onSubmitHandler}
       >
         <div className="flex flex-col items-center gap-1 w-full">

@@ -24,7 +24,7 @@ export const SideNavComponent = ({
     <Link
       href={href}
       className={`flex items-center gap-2.5 w-full py-2 pl-4 rounded-lg text-white cursor-pointer
-        ${isSelected ? "bg-blue-600" : "hover:bg-gray-700"}`}
+        ${isSelected ? "bg-blue-600" : "hover:bg-slate-700"}`}
     >
       <Image src={`/icons/${icon}.svg`} alt={icon} width={20} height={20} />
       {isExpanded && <span className="hidden md:inline text-lg">{title}</span>}

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { AuthForm, FormInput, FormValues } from "@/components";
 import { useNotificationContext } from "@/contexts";
+import { validateLoginDetails } from "@/utils";
 
 const LoginPage = () => {
   const { notify } = useNotificationContext();
@@ -13,7 +14,13 @@ const LoginPage = () => {
     const email: string = formValues["email"] as string;
     const password: string = formValues["password"] as string;
 
-    notify("Sample Notification", "success");
+    const [isValid, message] = validateLoginDetails(email, password);
+
+    if (!isValid) {
+      notify(message, "error");
+      return;
+    }
+
     console.log(email, password);
   };
 
@@ -60,7 +67,7 @@ const LoginPage = () => {
           Login
         </button>
       </div>
-      <p className="mt-6 text-center text-sm text-slate-400">
+      <p className="my-4 text-center text-sm text-slate-400">
         <span className="mr-1">Don&apos;t have an account?</span>
         <button
           type="button"

@@ -3,9 +3,10 @@
 import { JSX, useEffect, useState } from "react";
 
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { ISideNavComponent, SideNavComponent } from "@/components";
+import { removeAuthToken } from "@/utils";
 
 const sideNavComponents: ISideNavComponent[] = [
   { href: "/dashboard", title: "Dashboard", icon: "home" },
@@ -16,13 +17,15 @@ const sideNavComponents: ISideNavComponent[] = [
 ];
 
 interface ISideNav {
-  userName?: string;
+  username?: string;
   email?: string;
   dpSrc?: string;
 }
 
-export const SideNav = ({ userName, email, dpSrc }: ISideNav): JSX.Element => {
+export const SideNav = ({ username, email, dpSrc }: ISideNav): JSX.Element => {
   const pathname = usePathname();
+  const router = useRouter();
+
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
   useEffect(() => {
@@ -31,17 +34,22 @@ export const SideNav = ({ userName, email, dpSrc }: ISideNav): JSX.Element => {
 
   const toggleSideNav = (): void => setIsExpanded((prev) => !prev);
 
+  const handleLogout = (): void => {
+    removeAuthToken();
+    router.replace("/login");
+  };
+
   const flexCenter: string = "flex items-center justify-center";
 
   return (
     <nav
       className={`relative top-0 left-0 h-screen ${
         isExpanded ? "w-64" : "w-20"
-      } bg-gray-800 overflow-hidden z-50 transition-all duration-300`}
+      } bg-slate-800 overflow-hidden z-50 transition-all duration-300`}
     >
-      <div className={`${flexCenter} gap-4 bg-gray-900 py-3 px-6`}>
+      <div className={`${flexCenter} gap-4 bg-slate-900 py-3 px-6`}>
         <h1
-          className={`text-blue-500 text-2xl font-bold whitespace-nowrap transition-opacity duration-200 ${
+          className={`text-blue-400 text-2xl font-bold whitespace-nowrap transition-opacity duration-200 ${
             isExpanded ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
         >
@@ -61,10 +69,10 @@ export const SideNav = ({ userName, email, dpSrc }: ISideNav): JSX.Element => {
             />
           ))}
         </div>
-        <div className="flex flex-col gap-2 text-white border-t border-gray-700 p-4">
+        <div className="flex flex-col gap-2 text-white border-t border-slate-700 p-4">
           <div className="flex items-center justify-start mb-3 gap-2 w-full">
             <div
-              className={`${flexCenter} w-10 h-10 rounded-full border-2 border-gray-300 overflow-hidden`}
+              className={`${flexCenter} w-10 h-10 rounded-full border-2 border-slate-300 overflow-hidden`}
             >
               <Image
                 src={dpSrc ?? "/icons/user.svg"}
@@ -74,12 +82,14 @@ export const SideNav = ({ userName, email, dpSrc }: ISideNav): JSX.Element => {
               />
             </div>
             <div className={`hidden ${isExpanded && "md:inline"}`}>
-              <p className="text-sm font-medium">{userName}</p>
-              <p className="text-xs text-gray-400">{email}</p>
+              <p className="text-sm font-medium">{username}</p>
+              <p className="text-xs text-slate-400">{email}</p>
             </div>
           </div>
           <button
-            className={`${flexCenter} w-full gap-2.5 bg-gray-500 text-base text-white font-semibold py-2 rounded-lg`}
+            type="button"
+            className={`${flexCenter} w-full gap-2.5 bg-slate-500 text-base text-white font-semibold py-2 rounded-lg cursor-pointer`}
+            onClick={handleLogout}
           >
             <span className={`hidden ${isExpanded && "md:inline"}`}>
               Logout
