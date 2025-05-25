@@ -1,0 +1,10 @@
+fastapi[standard]
+asyncpg
+databases[asyncpg]
+sqlalchemy
+redis
+pydantic
+python-dotenv
+bcrypt
+pyjwt
+numpy
