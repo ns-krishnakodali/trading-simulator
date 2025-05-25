@@ -3,6 +3,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 
+import { NotificationProvider } from "@/contexts";
+
 const openSans = Open_Sans({
   variable: "--font-open-sans",
   subsets: ["latin", "math"],
@@ -28,7 +30,9 @@ export default function RootLayout({
         />
       </head>
       <body className={`${openSans.variable} antialiased`}>
-        <div className="flex">{children}</div>
+        <NotificationProvider>
+          <div className="flex">{children}</div>
+        </NotificationProvider>
       </body>
     </html>
   );

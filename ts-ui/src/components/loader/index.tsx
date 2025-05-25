@@ -5,9 +5,7 @@ interface ILoader {
   height?: number;
 }
 
-export const Loader = (props: ILoader): JSX.Element => {
-  const { width = 60, height = 60 } = props;
-
+export const Loader = ({ width = 60, height = 60 }: ILoader): JSX.Element => {
   return (
     <div>
       <svg width={width} height={height} viewBox="0 0 50 50">

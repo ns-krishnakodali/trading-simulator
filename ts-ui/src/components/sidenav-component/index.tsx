@@ -13,9 +13,13 @@ export interface ISideNavComponent {
   isExpanded?: boolean;
 }
 
-export const SideNavComponent = (props: ISideNavComponent): JSX.Element => {
-  const { href, title, icon, isSelected = false, isExpanded = true } = props;
-
+export const SideNavComponent = ({
+  href,
+  title,
+  icon,
+  isSelected = false,
+  isExpanded = true,
+}: ISideNavComponent): JSX.Element => {
   return (
     <Link
       href={href}

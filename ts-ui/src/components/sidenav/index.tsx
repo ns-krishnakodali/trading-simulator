@@ -21,9 +21,7 @@ interface ISideNav {
   dpSrc?: string;
 }
 
-export const SideNav = (props: ISideNav): JSX.Element => {
-  const { userName, email, dpSrc } = props;
-
+export const SideNav = ({ userName, email, dpSrc }: ISideNav): JSX.Element => {
   const pathname = usePathname();
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
