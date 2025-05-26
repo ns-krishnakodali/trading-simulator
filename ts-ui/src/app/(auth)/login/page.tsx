@@ -2,17 +2,22 @@
 
 import { useRouter } from "next/navigation";
 
-import { AuthForm, FormInput, FormValues } from "@/components";
-import { useNotificationContext } from "@/contexts";
-import { validateLoginDetails } from "@/utils";
+import { JSX, useState } from "react";
 
-const LoginPage = () => {
+import { AuthForm, FormInput, FormValues, Loader } from "@/components";
+import { useNotificationContext } from "@/contexts";
+import { apiService, setAuthToken, validateLoginDetails } from "@/utils";
+
+const LoginPage = (): JSX.Element => {
   const { notify } = useNotificationContext();
   const router = useRouter();
 
-  const onLogin = (formValues: FormValues): void => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const onLogin = async (formValues: FormValues): Promise<void> => {
     const email: string = formValues["email"] as string;
     const password: string = formValues["password"] as string;
+    const rememberMe: boolean = !!formValues["remember-me"];
 
     const [isValid, message] = validateLoginDetails(email, password);
 
@@ -21,7 +26,24 @@ const LoginPage = () => {
       return;
     }
 
-    console.log(email, password);
+    setIsLoading(true);
+    try {
+      const response = await apiService.post<{ token: string }>(
+        "/auth/login",
+        { email, password, rememberMe },
+        { withAuth: false },
+      );
+      setAuthToken(response?.token);
+      router.push("/dashboard");
+    } catch (error: unknown) {
+      notify(
+        (error as { response?: { data?: { detail?: string } } })?.response?.data
+          ?.detail || "Login failed",
+        "error",
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,10 +83,14 @@ const LoginPage = () => {
       <div className="mt-12">
         <button
           type="submit"
-          className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm font-medium text-sm text-white bg-blue-600
+          className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm font-medium text-base text-white bg-blue-600
             hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-blue-500 cursor-pointer"
         >
-          Login
+          {isLoading ? (
+            <Loader width={24} height={24} stroke="#FFFFFF" />
+          ) : (
+            <>Login</>
+          )}
         </button>
       </div>
       <p className="my-4 text-center text-sm text-slate-400">

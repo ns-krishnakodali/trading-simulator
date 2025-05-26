@@ -29,7 +29,7 @@ pip install -r requirements.txt
 ```plaintext
 SECRET_KEY=SECRET_KEY
 ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=300
+ACCESS_TOKEN_EXPIRE_HOURS=300
 ```
 
 **Generate a secret key using the following Python code:**

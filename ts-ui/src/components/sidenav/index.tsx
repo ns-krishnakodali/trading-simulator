@@ -69,7 +69,7 @@ export const SideNav = ({ username, email, dpSrc }: ISideNav): JSX.Element => {
             />
           ))}
         </div>
-        <div className="flex flex-col gap-2 text-white border-t border-slate-700 p-4">
+        <div className="flex flex-col gap-4 text-white border-t border-slate-700 p-4">
           <div className="flex items-center justify-start mb-3 gap-2 w-full">
             <div
               className={`${flexCenter} w-10 h-10 rounded-full border-2 border-slate-300 overflow-hidden`}
@@ -88,7 +88,7 @@ export const SideNav = ({ username, email, dpSrc }: ISideNav): JSX.Element => {
           </div>
           <button
             type="button"
-            className={`${flexCenter} w-full gap-2.5 bg-slate-500 text-base text-white font-semibold py-2 rounded-lg cursor-pointer`}
+            className={`${flexCenter} w-full gap-2.5 bg-slate-500 text-base text-red-800 font-semibold py-2 rounded-lg cursor-pointer`}
             onClick={handleLogout}
           >
             <span className={`hidden ${isExpanded && "md:inline"}`}>

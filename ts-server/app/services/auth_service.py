@@ -6,38 +6,37 @@ from sqlalchemy.future import select
 
 from app.auth.password_handler import hash_password, verify_password
 from app.auth.jwt_handler import create_access_token
+from app.dtos.auth_dtos import LoginPayload, SignUpPayload
 from app.models.users import Users
 
 logger = logging.getLogger("auth")
 
 
-async def authenticate_user(user_email: str, password: str, db: AsyncSession) -> str:
-    result = await db.execute(select(Users).where(Users.email == user_email))
+async def authenticate_user(login_payload: LoginPayload, db: AsyncSession) -> str:
+    result = await db.execute(select(Users).where(Users.email == login_payload.email))
     user = result.scalars().first()
 
     if not user:
-        raise ValueError("Email not registered. Please check the email address.")
+        raise ValueError("Email not registered, please check the email address.")
 
-    if not verify_password(password, user.password_hash):
-        raise ValueError("Incorrect password. Kindly try again.")
+    if not verify_password(login_payload.password, user.password_hash):
+        raise ValueError("Incorrect credentials, please try again.")
 
     logging.info(f"Creating access token for: {user.email}")
-    return create_access_token({"email": user.email})
+    return create_access_token({"email": user.email}, login_payload.remember_me)
 
 
-async def register_user(
-    name: str, user_email: str, password: str, db: AsyncSession
-) -> Users:
-    result = await db.execute(select(Users).where(Users.email == user_email))
+async def register_user(signup_payload: SignUpPayload, db: AsyncSession) -> Users:
+    result = await db.execute(select(Users).where(Users.email == signup_payload.email))
     existing_user = result.scalars().first()
 
     if existing_user:
         raise ValueError("A user with this email already exists.")
 
-    hashed_password = hash_password(password)
+    hashed_password = hash_password(signup_payload.password)
     new_user = Users(
-        name=name,
-        email=user_email,
+        name=signup_payload.name,
+        email=signup_payload.email,
         password_hash=hashed_password,
         created_at=datetime.now(timezone.utc),
         updated_at=datetime.now(timezone.utc),

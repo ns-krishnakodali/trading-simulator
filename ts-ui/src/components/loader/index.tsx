@@ -3,21 +3,28 @@ import { JSX } from "react";
 interface ILoader {
   width?: number;
   height?: number;
+  className?: string;
+  stroke?: string;
 }
 
-export const Loader = ({ width = 60, height = 60 }: ILoader): JSX.Element => {
+export const Loader = ({
+  width = 60,
+  height = 60,
+  className,
+  stroke = "#60A5FA",
+}: ILoader): JSX.Element => {
   return (
-    <div>
+    <span className={className}>
       <svg width={width} height={height} viewBox="0 0 50 50">
         <circle
           cx="25"
           cy="25"
           r="20"
           fill="none"
-          stroke="#60A5FA"
-          stroke-width="3"
-          stroke-linecap="round"
-          stroke-dasharray="60 120"
+          stroke={stroke}
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeDasharray="60 120"
         >
           <animateTransform
             attributeName="transform"
@@ -29,6 +36,6 @@ export const Loader = ({ width = 60, height = 60 }: ILoader): JSX.Element => {
           />
         </circle>
       </svg>
-    </div>
+    </span>
   );
 };

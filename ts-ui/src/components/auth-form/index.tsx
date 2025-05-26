@@ -14,7 +14,10 @@ export type FormValues = {
 export const AuthForm = ({ children, onSubmitForm }: IAuthForm) => {
   const onSubmitHandler = (event: FormEvent): void => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget as HTMLFormElement);
+
+    const formData: FormData = new FormData(
+      event.currentTarget as HTMLFormElement,
+    );
     onSubmitForm(Object.fromEntries(formData.entries()));
   };
 
@@ -30,6 +33,7 @@ export const AuthForm = ({ children, onSubmitForm }: IAuthForm) => {
             alt={"Trading Simulator"}
             width={60}
             height={60}
+            priority
           />
           <h1 className="text-2xl font-bold whitespace-nowrap">
             Trading Simulator

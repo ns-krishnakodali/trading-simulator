@@ -4,18 +4,20 @@ import os
 from fastapi import HTTPException, Request, status
 from datetime import datetime, timezone, timedelta
 from dotenv import load_dotenv
+from typing import Optional
 
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
+ACCESS_TOKEN_EXPIRE_HOURS = int(os.getenv("ACCESS_TOKEN_EXPIRE_HOURS", 30))
 
 
-def create_access_token(data: dict) -> str:
+def create_access_token(data: dict, remember: Optional[bool] = False) -> str:
     to_encode = data.copy()
+
     expiration_time = datetime.now(timezone.utc) + timedelta(
-        minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        hours=(720 if remember else ACCESS_TOKEN_EXPIRE_HOURS)
     )
     to_encode.update({"exp": int(expiration_time.timestamp())})
 

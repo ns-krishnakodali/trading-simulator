@@ -2,15 +2,19 @@
 
 import { useRouter } from "next/navigation";
 
-import { AuthForm, FormInput, FormValues } from "@/components";
-import { useNotificationContext } from "@/contexts";
-import { validateSignUpDetails } from "@/utils";
+import { JSX, useState } from "react";
 
-const SignUpPage = () => {
+import { AuthForm, FormInput, FormValues, Loader } from "@/components";
+import { useNotificationContext } from "@/contexts";
+import { apiService, validateSignUpDetails } from "@/utils";
+
+const SignUpPage = (): JSX.Element => {
   const { notify } = useNotificationContext();
   const router = useRouter();
 
-  const onSignup = (formValues: FormValues): void => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const onSignup = async (formValues: FormValues): Promise<void> => {
     const username: string = formValues["username"] as string;
     const email: string = formValues["email"] as string;
     const password: string = formValues["password"] as string;
@@ -28,7 +32,24 @@ const SignUpPage = () => {
       return;
     }
 
-    console.log(username, email, password, confirmPassword);
+    setIsLoading(true);
+    try {
+      await apiService.post(
+        "/auth/sign-up",
+        { name: username, email, password },
+        { withAuth: false },
+      );
+      notify("Login successful", "success");
+      router.push("/login");
+    } catch (error: unknown) {
+      notify(
+        (error as { response?: { data?: { detail?: string } } })?.response?.data
+          ?.detail || "Signup failed",
+        "error",
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -69,7 +90,11 @@ const SignUpPage = () => {
           className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600
           hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-green-500 cursor-pointer"
         >
-          Create Account
+          {isLoading ? (
+            <Loader width={24} height={24} stroke="#FFFFFF" />
+          ) : (
+            <>Create Account</>
+          )}
         </button>
       </div>
       <p className="mt-6 text-center text-sm text-slate-400">

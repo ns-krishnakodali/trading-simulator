@@ -1,12 +1,13 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
-class LoginRequest(BaseModel):
+class LoginPayload(BaseModel):
     email: str
     password: str
+    remember_me: bool = Field(alias="rememberMe")
 
 
-class SignUpRequest(BaseModel):
+class SignUpPayload(BaseModel):
     name: str
     email: str
     password: str
