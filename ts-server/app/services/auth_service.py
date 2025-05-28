@@ -7,13 +7,13 @@ from sqlalchemy.future import select
 from app.auth.password_handler import hash_password, verify_password
 from app.auth.jwt_handler import create_access_token
 from app.dtos.auth_dtos import LoginPayload, SignUpPayload
-from app.models.users import Users
+from app.models.users import User
 
 logger = logging.getLogger("auth")
 
 
 async def authenticate_user(login_payload: LoginPayload, db: AsyncSession) -> str:
-    result = await db.execute(select(Users).where(Users.email == login_payload.email))
+    result = await db.execute(select(User).where(User.email == login_payload.email))
     user = result.scalars().first()
 
     if not user:
@@ -26,15 +26,15 @@ async def authenticate_user(login_payload: LoginPayload, db: AsyncSession) -> st
     return create_access_token({"email": user.email}, login_payload.remember_me)
 
 
-async def register_user(signup_payload: SignUpPayload, db: AsyncSession) -> Users:
-    result = await db.execute(select(Users).where(Users.email == signup_payload.email))
+async def register_user(signup_payload: SignUpPayload, db: AsyncSession) -> User:
+    result = await db.execute(select(User).where(User.email == signup_payload.email))
     existing_user = result.scalars().first()
 
     if existing_user:
         raise ValueError("A user with this email already exists.")
 
     hashed_password = hash_password(signup_payload.password)
-    new_user = Users(
+    new_user = User(
         name=signup_payload.name,
         email=signup_payload.email,
         password_hash=hashed_password,

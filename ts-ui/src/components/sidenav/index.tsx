@@ -9,11 +9,12 @@ import { ISideNavComponent, SideNavComponent } from "@/components";
 import { removeAuthToken } from "@/utils";
 
 const sideNavComponents: ISideNavComponent[] = [
-  { href: "/dashboard", title: "Dashboard", icon: "home" },
-  { href: "/trade", title: "Trade", icon: "trade" },
-  { href: "/portfolio", title: "Portfolio", icon: "portfolio" },
-  { href: "/market-news", title: "Market News", icon: "news" },
-  { href: "/settings", title: "Settings", icon: "settings" },
+  { href: "/dashboard", name: "Dashboard", icon: "home" },
+  { href: "/portfolio", name: "Portfolio", icon: "portfolio" },
+  { href: "/stocks", name: "Stocks", icon: "stocks" },
+  { href: "/commodities", name: "Commodities", icon: "commodities" },
+  { href: "/backtest", name: "Backtest Strategies", icon: "backtest" },
+  { href: "/settings", name: "Settings", icon: "settings" },
 ];
 
 interface ISideNav {
@@ -47,22 +48,20 @@ export const SideNav = ({ username, email, dpSrc }: ISideNav): JSX.Element => {
         isExpanded ? "w-64" : "w-20"
       } bg-slate-800 overflow-hidden z-50 transition-all duration-300`}
     >
-      <div className={`${flexCenter} gap-4 bg-slate-900 py-3 px-6`}>
-        <h1
-          className={`text-blue-400 text-2xl font-bold whitespace-nowrap transition-opacity duration-200 ${
-            isExpanded ? "opacity-100 visible" : "opacity-0 invisible"
-          }`}
-        >
-          Trading Simulator
+      <div
+        className={`hidden md:flex ${flexCenter} gap-4 bg-slate-900 py-3 px-6`}
+      >
+        <h1 className="text-blue-400 text-2xl font-bold whitespace-nowrap transition-opacity duration-200">
+          {isExpanded ? <>Trading Simulator</> : <>TS</>}
         </h1>
       </div>
-      <div className="flex flex-col justify-between h-4/5">
+      <div className="flex flex-col justify-between h-5/6">
         <div className="flex flex-col gap-4 items-start pt-4 pl-3 pr-6">
           {sideNavComponents.map((component, idx) => (
             <SideNavComponent
               key={idx}
               href={component.href}
-              title={component.title}
+              name={component.name}
               icon={component.icon}
               isSelected={pathname === component.href}
               isExpanded={isExpanded}

@@ -1,20 +1,16 @@
-import logging
-
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.apis.auth import router as auth_router
 from app.core.create_tables import create_tables
+from app.core.logger_config import setup_logging
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
+setup_logging()
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_: FastAPI):
     await create_tables()
     yield
 
