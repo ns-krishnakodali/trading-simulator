@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { JSX } from "react";
 
-export interface ISideNavComponent {
+export interface ISideNavElement {
   href: string;
   name: string;
   icon: string;
@@ -12,13 +12,13 @@ export interface ISideNavComponent {
   isExpanded?: boolean;
 }
 
-export const SideNavComponent = ({
+export const SideNavElement = ({
   href,
   name,
   icon,
   isSelected = false,
   isExpanded = true,
-}: ISideNavComponent): JSX.Element => {
+}: ISideNavElement): JSX.Element => {
   return (
     <Link
       href={href}

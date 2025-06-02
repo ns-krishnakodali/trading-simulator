@@ -1,4 +1,6 @@
-const PortfolioPage = () => {
+import { JSX } from "react";
+
+const PortfolioPage = (): JSX.Element => {
   return <h1>Portfolio</h1>;
 };
 

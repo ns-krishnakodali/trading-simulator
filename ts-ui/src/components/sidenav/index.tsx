@@ -5,10 +5,10 @@ import { JSX, useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
-import { ISideNavComponent, SideNavComponent } from "@/components";
+import { ISideNavElement, SideNavElement } from "@/components";
 import { removeAuthToken } from "@/utils";
 
-const sideNavComponents: ISideNavComponent[] = [
+const sideNavComponents: ISideNavElement[] = [
   { href: "/dashboard", name: "Dashboard", icon: "home" },
   { href: "/portfolio", name: "Portfolio", icon: "portfolio" },
   { href: "/stocks", name: "Stocks", icon: "stocks" },
@@ -58,7 +58,7 @@ export const SideNav = ({ username, email, dpSrc }: ISideNav): JSX.Element => {
       <div className="flex flex-col justify-between h-5/6">
         <div className="flex flex-col gap-4 items-start pt-4 pl-3 pr-6">
           {sideNavComponents.map((component, idx) => (
-            <SideNavComponent
+            <SideNavElement
               key={idx}
               href={component.href}
               name={component.name}
