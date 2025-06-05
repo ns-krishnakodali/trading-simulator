@@ -34,9 +34,9 @@ const ProtectedLayout = ({
   if (!isAuth) return <></>;
 
   return (
-    <div className="flex">
+    <div className="flex h-screen w-screen">
       <SideNav username="User Name" email="user@email.com" />
-      {children}
+      <div className="flex-1 overflow-y-auto bg-gray-100">{children}</div>
     </div>
   );
 };
