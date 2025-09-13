@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { JSX } from "react";
+import { type JSX } from "react";
 
 export interface ISideNavElement {
   href: string;

@@ -1,7 +1,7 @@
 import "./dashboard-card.css";
 
 import Image from "next/image";
-import { JSX } from "react";
+import { type JSX } from "react";
 
 export type TextTone = "positive" | "negative" | "neutral";
 

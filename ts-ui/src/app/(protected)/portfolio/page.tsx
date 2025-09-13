@@ -1,4 +1,4 @@
-import { JSX } from "react";
+import { type JSX } from "react";
 
 const PortfolioPage = (): JSX.Element => {
   return <h1>Portfolio</h1>;

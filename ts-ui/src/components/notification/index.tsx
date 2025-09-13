@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import { type JSX } from "react";
 
 export type NotificationType = "info" | "error" | "success" | "warning";
 
@@ -13,7 +13,7 @@ export const Notification = ({
   message,
   type = "success",
   onCloseHandler,
-}: INotification) => {
+}: INotification): JSX.Element => {
   const typeStyles = {
     info: "bg-blue-100 text-blue-800 border-blue-500",
     success: "bg-green-100 text-green-800 border-green-500",

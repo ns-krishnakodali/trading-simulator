@@ -2,11 +2,11 @@
 
 import { useRouter } from "next/navigation";
 
-import { JSX, useState } from "react";
+import { type JSX, useState } from "react";
 
 import { AuthForm, FormInput, FormValues, Loader } from "@/components";
 import { useNotificationContext } from "@/contexts";
-import { apiService, validateSignUpDetails } from "@/utils";
+import { apiService, isValidEmail } from "@/utils";
 
 const SignUpPage = (): JSX.Element => {
   const { notify } = useNotificationContext();
@@ -20,12 +20,12 @@ const SignUpPage = (): JSX.Element => {
     const password: string = formValues["password"] as string;
     const confirmPassword: string = formValues["confirm-password"] as string;
 
-    const [isValid, message] = validateSignUpDetails(
-      username,
-      email,
-      password,
-      confirmPassword,
-    );
+    let [isValid, message]: [boolean, string] = [false, ""];
+    if (!username || !email || !password || !confirmPassword)
+      message = "All fields are required.";
+    else if (!isValidEmail(email)) message = "Invalid email format.";
+    else if (password !== confirmPassword) message = "Passwords do not match.";
+    else isValid = true;
 
     if (!isValid) {
       notify(message, "error");

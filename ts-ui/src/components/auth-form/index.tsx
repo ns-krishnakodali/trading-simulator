@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { FormEvent } from "react";
+import { FormEvent, type JSX } from "react";
 
 interface IAuthForm {
   children: React.ReactNode;
@@ -11,7 +11,10 @@ export type FormValues = {
   [key: string]: FormDataEntryValue;
 };
 
-export const AuthForm = ({ children, onSubmitForm }: IAuthForm) => {
+export const AuthForm = ({
+  children,
+  onSubmitForm,
+}: IAuthForm): JSX.Element => {
   const onSubmitHandler = (event: FormEvent): void => {
     event.preventDefault();
 

@@ -2,11 +2,11 @@
 
 import { useRouter } from "next/navigation";
 
-import { JSX, useState } from "react";
+import { type JSX, useState } from "react";
 
 import { AuthForm, FormInput, FormValues, Loader } from "@/components";
 import { useNotificationContext } from "@/contexts";
-import { apiService, setAuthToken, validateLoginDetails } from "@/utils";
+import { apiService, isValidEmail, setAuthToken } from "@/utils";
 
 const LoginPage = (): JSX.Element => {
   const { notify } = useNotificationContext();
@@ -19,7 +19,10 @@ const LoginPage = (): JSX.Element => {
     const password: string = formValues["password"] as string;
     const rememberMe: boolean = !!formValues["remember-me"];
 
-    const [isValid, message] = validateLoginDetails(email, password);
+    let [isValid, message]: [boolean, string] = [false, ""];
+    if (!email || !password) message = "All fields are required";
+    else if (!isValidEmail(email)) message = "Invalid email format.";
+    else isValid = true;
 
     if (!isValid) {
       notify(message, "error");

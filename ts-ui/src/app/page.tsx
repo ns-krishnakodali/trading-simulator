@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 import { isValidToken } from "@/utils";
 
-const HomePage = () => {
+const HomePage = (): void => {
   const router = useRouter();
 
   useEffect(() => {

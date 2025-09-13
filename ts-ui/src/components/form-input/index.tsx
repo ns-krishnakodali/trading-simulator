@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute, JSX } from "react";
+import { HTMLInputTypeAttribute, type JSX } from "react";
 
 interface IFormInput {
   id: string;

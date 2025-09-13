@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useEffect, useState } from "react";
+import { type JSX, useEffect, useState } from "react";
 
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -8,20 +8,24 @@ import { usePathname, useRouter } from "next/navigation";
 import { ISideNavElement, SideNavElement } from "@/components";
 import { removeAuthToken } from "@/utils";
 
-const sideNavComponents: ISideNavElement[] = [
-  { href: "/dashboard", name: "Dashboard", icon: "home" },
-  { href: "/portfolio", name: "Portfolio", icon: "portfolio" },
-  { href: "/stocks", name: "Stocks", icon: "stocks" },
-  { href: "/commodities", name: "Commodities", icon: "commodities" },
-  { href: "/backtest", name: "Backtest Strategies", icon: "backtest" },
-  { href: "/settings", name: "Settings", icon: "settings" },
-];
-
 interface ISideNav {
   username?: string;
   email?: string;
   dpSrc?: string;
 }
+
+const sideNavComponents: ISideNavElement[] = [
+  { href: "/dashboard", name: "Dashboard", icon: "home" },
+  { href: "/portfolio", name: "Portfolio", icon: "portfolio" },
+  { href: "/stocks", name: "Stocks", icon: "stocks" },
+  {
+    href: "/futures-options",
+    name: "Futures & Options",
+    icon: "futures-options",
+  },
+  { href: "/backtest", name: "Backtest Strategies", icon: "backtest" },
+  { href: "/settings", name: "Settings", icon: "settings" },
+];
 
 export const SideNav = ({ username, email, dpSrc }: ISideNav): JSX.Element => {
   const pathname = usePathname();
